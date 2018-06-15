@@ -32,7 +32,7 @@ fetch('res.json')
                 $('#matchCont' + date + '').append('<div id="' + matchNameKey + '" class="tab-pane fade '+matchActif+'"><h3>' + a + '</h3><p></p></div>');
                 var str = a;
                 var splitStr = str.split("-");
-                $('#' + matchNameKey + '').append('<div class="table-responsive"><table class="table"><thead><tr><th width="33%"></th><th width="33%">' + splitStr[0] + '</th><th width="33%">' + splitStr[1] + '</th></tr></thead><tbody id="body' + matchNameKey + '"></tbody></table></div>');
+                $('#' + matchNameKey + '').append('<div class="table-responsive"><table class="table" style="width:auto"><thead><tr><th width="33%"></th><th width="33%">' + splitStr[0] + '</th><th width="33%">' + splitStr[1] + '</th></tr></thead><tbody id="body' + matchNameKey + '"></tbody></table></div>');
 
                 $.each(b, function (index, c) {
                     var team1 = '';
