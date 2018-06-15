@@ -25,9 +25,14 @@ fetch('res.json')
         }
         j++;
         $('#matchCont'+k+'').append('<div id="'+a+'" class="tab-pane fade"><h3>'+a+'</h3><p></p></div>');
+        var str = a;
+        var splitStr = str.split("-");
+        $('#'+a+'').append('<div class="table-responsive"><table class="table"><thead><tr><th></th><th>'+splitStr[0]+'</th><th>'+splitStr[1]+'</th></tr></thead><tbody id="body'+a+'"></tbody></table></div>');
+
         $.each(b,function(index, c) {
-          $('#'+a+'').append('<div>'+c.username+':'+c.but1+':'+c.but2+'</div>');
+          $('#body'+a+'').append('<tr><td>'+c.username+'</td><td>'+c.but1+'</td><td>'+c.but2+'</td></tr>');
         });
+
       });
     });
   });
