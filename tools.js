@@ -32,10 +32,23 @@ fetch('res.json')
                 $('#matchCont' + date + '').append('<div id="' + matchNameKey + '" class="tab-pane fade '+matchActif+'"><h3>' + a + '</h3><p></p></div>');
                 var str = a;
                 var splitStr = str.split("-");
-                $('#' + matchNameKey + '').append('<div class="table-responsive"><table class="table"><thead><tr><th></th><th>' + splitStr[0] + '</th><th>' + splitStr[1] + '</th></tr></thead><tbody id="body' + matchNameKey + '"></tbody></table></div>');
+                $('#' + matchNameKey + '').append('<div class="table-responsive"><table class="table"><thead><tr><th width="33%"></th><th width="33%">' + splitStr[0] + '</th><th width="33%">' + splitStr[1] + '</th></tr></thead><tbody id="body' + matchNameKey + '"></tbody></table></div>');
 
                 $.each(b, function (index, c) {
-                    $('#body' + matchNameKey + '').append('<tr><td>' + c.username + '</td><td>' + c.but1 + '</td><td>' + c.but2 + '</td></tr>');
+                    var team1 = '';
+                    var team2 = '';
+                    if (c.but1 > c.but2) {
+                        team1 = 'win';
+                        team2 = 'lost';
+                    } else if (c.but2 > c.but1) {
+                        team1 = 'lost';
+                        team2 = 'win';
+                    } else {
+                        team1 = 'equal';
+                        team2 = 'equal';
+                    }
+                    $('#body' + matchNameKey + '').append('<tr><td>' + c.username + '</td><td class="score '+team1+'">' + c.but1 + '</td>' +
+                        '<td class="score '+team2+'">' + c.but2 + '</td></tr>');
                 });
 
             });
