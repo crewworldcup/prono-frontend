@@ -1,6 +1,6 @@
 { "name": "crewworldcup",
   "dependencies": {
     "connect": "3.6.6",
-	"server-static" : "1.13.2"
+	"serve-static" : "1.13.2"
 	}
 }
