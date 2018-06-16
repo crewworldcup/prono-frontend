@@ -1,4 +1,4 @@
-var jsonObj;
+var rankEndFileName = "_rank.json";
 fetch('res.json')
     .then(function (response) {
         return response.json();
@@ -11,12 +11,13 @@ fetch('res.json')
         });
         pronosByDate = sortOnKeys(pronosByDate);
         for (var date in pronosByDate) {
+            console.log(date+rankEndFileName);
             var dateActive = "";
             if (i == 0) {
                 dateActive = "active";
             }
             $('#dateTab').append('<li class="'+dateActive+'"><a href="#tab_' + date + '" data-toggle="pill">' + date + '</a></li>');
-            $('#dateCont').append('<div class="tab-pane '+dateActive+'" id="tab_'+date+'"><ul class="nav nav-pills" id="matchTab'+date+'"><div class="tab-content" id="matchCont'+date+'"></div></ul></div>');
+            $('#dateCont').append('<div class="tab-pane '+dateActive+'" id="tab_'+date+'"><div id="tab_match'+date+'"><span><ul class="nav nav-pills" id="matchTab'+date+'"><div class="tab-content" id="matchCont'+date+'"></div></ul></span><span id="class_'+date+'"></span></div></div>');
 
             var j = 0;
             var pronos = pronosByDate[date];
@@ -55,6 +56,9 @@ fetch('res.json')
 
             i++;
         }
+        for (var date in pronosByDate) {
+            appendClassement(date);
+        }
     });
 
 function sortOnKeys(dict) {
@@ -71,4 +75,24 @@ function sortOnKeys(dict) {
     }
 
     return tempDict;
+};
+
+function appendClassement(dDay) {
+  try {
+    fetch(dDay+rankEndFileName)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(classementJson) {
+        $('#class_' + dDay + '').append('<table class="table" style="width:auto"><thead><tr><th width="33%">Classement</th><th width="33%">Joueur</th><th width="33%">Points</th><th width="33%">Gain Pt</th><th width="33%">Gain Rg</th></thead><tbody id="classBody_'+dDay+'"></tbody></table>');
+        $.each(classementJson, function(num, c) {
+            $('#classBody_' + dDay + '').append('<tr><td>'+c.r+'</td><td>'+c.username+'</td><td>'+c.nbPoint+'</td><td>'+c.evolPoint+'</td><td>'+c.evolRank+'</td></tr>');
+            console.log(c.username);
+        });
+      });
+  }
+  catch(err) {
+    $('#class_' + dDay + '').append('<p>Pas encore de classement</p>');
+    console.log("pas de fichier classement pour "+dDay);
+  }
 };
