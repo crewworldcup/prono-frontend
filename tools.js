@@ -29,7 +29,7 @@ fetch('res.json')
                 $('#matchTab' + date + '').append('<li class="' + matchActif + '"><a data-toggle="pill" href="#' + matchNameKey + '">' + a + '</a></li>');
                 j++;
 
-                $('#matchCont' + date + '').append('<div id="' + matchNameKey + '" class="tab-pane fade ' + matchActif + '"><h3>' + a + '</h3><p></p></div>');
+                $('#matchCont' + date + '').append('<div id="' + matchNameKey + '" class="tab-pane fade ' + matchActif + '"></div>');
                 var str = a;
                 var splitStr = str.split("-");
                 $('#' + matchNameKey + '').append('<div class="table-responsive"><table class="table" style="width:auto"><thead><tr><th width="33%"></th><th width="33%">' + splitStr[0] + '</th><th width="33%">' + splitStr[1] + '</th></tr></thead><tbody id="body' + matchNameKey + '"></tbody></table></div>');
@@ -124,7 +124,7 @@ function appendClassement(dDay) {
                             return a.username.localeCompare(b.username);
                         });
                     });
-                    $('#class_' + dDay + '').append('<table class="table" style="width:auto"><thead><tr><th width="33%">Classement</th><th width="33%">Joueur</th><th width="33%">Points</th><th width="33%">Gain Pt</th><th width="33%">Gain Rg</th></thead><tbody id="classBody_' + dDay + '"></tbody></table>');
+                    $('#class_' + dDay + '').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th><th>Gain Pt</th><th>Gain Rg</th></thead><tbody id="classBody_' + dDay + '"></tbody></table>');
                     var i = 1;
                     $.each(rankMap, function (rank, users) {
                         $.each(users, function (r, user) {
