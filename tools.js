@@ -1,4 +1,6 @@
 var rankEndFileName = "_rank.json";
+var dateDuJour = new Date().toISOString().split('T')[0].split('-');
+var dateDuJourF = dateDuJour[2]+'-'+dateDuJour[1]+'-'+dateDuJour[0]
 fetch('res.json')
     .then(function (response) {
         return response.json();
@@ -12,7 +14,8 @@ fetch('res.json')
         pronosByDate = sortOnKeys(pronosByDate);
         for (var date in pronosByDate) {
             var dateActive = "";
-            if (i == 0) {
+            //if (i == 0) {
+            if (date == dateDuJourF) {
                 dateActive = "active";
             }
             $('#dateTab').append('<li class="' + dateActive + '"><a href="#tab_' + date + '" data-toggle="pill">' + date + '</a></li>');
