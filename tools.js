@@ -47,6 +47,26 @@ fetch('res.json')
                         team1 = 'equal';
                         team2 = 'equal';
                     }
+                    if (c.username === "OlivierBREANT") {
+                        c.username = "Olivier";
+                    } else if (c.username === "JulienBoulogne") {
+                        c.username = "Julien de B.";
+                    } else if (c.username === "NicoSICARD") {
+                        c.username = "Nicolas S.";
+
+                    } else if (c.username === "SebBREANT") {
+                        c.username = "Sébastien";
+
+                    } else if (c.username === "Nicolas") {
+                        c.username = "Nicolas P.";
+
+                    } else if (c.username === "DorianG") {
+                        c.username = "Dorian";
+
+                    } else if (c.username === "Julien") {
+                        c.username = "Julien N.";
+
+                    }
                     $('#body' + matchNameKey + '').append('<tr><td>' + c.username + '</td><td class="score ' + team1 + '">' + c.but1 + '</td>' +
                         '<td class="score ' + team2 + '">' + c.but2 + '</td></tr>');
                 });
@@ -99,12 +119,25 @@ function appendClassement(dDay) {
                         }
                     });
                     rankMap = sortOnKeys(rankMap);
+                    $.each(rankMap, function (rank, users) {
+                        rankMap[rank] = users.sort(function(a,b) {
+                            return a.username.localeCompare(b.username);
+                        });
+                    });
                     $('#class_' + dDay + '').append('<table class="table" style="width:auto"><thead><tr><th width="33%">Classement</th><th width="33%">Joueur</th><th width="33%">Points</th><th width="33%">Gain Pt</th><th width="33%">Gain Rg</th></thead><tbody id="classBody_' + dDay + '"></tbody></table>');
+                    var i = 1;
                     $.each(rankMap, function (rank, users) {
                         $.each(users, function (r, user) {
-                            console.log(rank);
-                            console.log(user);
-                            $('#classBody_' + dDay + '').append('<tr><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td><td>' + user.evolPoint + '</td><td>' + user.evolRank + '</td></tr>');
+                            var rankClass = "";
+                            if (i === 1) {
+                                rankClass = "gold";
+                            } else if (i === 2) {
+                                rankClass = "silver";
+                            } else if (i === 3) {
+                                rankClass = "bronze";
+                            }
+                            i++;
+                            $('#classBody_' + dDay + '').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td><td>' + user.evolPoint + '</td><td>' + user.evolRank + '</td></tr>');
 
                         });
                     });
