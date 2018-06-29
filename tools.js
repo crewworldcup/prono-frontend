@@ -81,6 +81,8 @@ fetch('res.json')
         for (var date in pronosByDate) {
             appendClassement(date);
         }
+
+        appendClassement1();
     });
 
 function sortOnKeys(dict) {
@@ -97,6 +99,60 @@ function sortOnKeys(dict) {
     }
 
     return tempDict;
+};
+
+function appendClassement1() {
+  try {
+    fetch('class1.json')
+    .then(function (response) {
+        if (response.status == 404) {
+            return "[]";
+        }
+        return response.json();
+
+    })
+    .then(function (classementJson) {
+        if (classementJson === "[]") {
+            $('#classement1').append('<p>Pas encore de classement</p>');
+        } else {
+            var rankMap = {};
+            $.each(classementJson, function (a, rank) {
+                if (rank.r in rankMap) {
+                    rankMap[rank.r].push(rank);
+                } else {
+                    rankMap[rank.r] = [rank];
+                }
+            });
+            rankMap = sortOnKeys(rankMap);
+            $.each(rankMap, function (rank, users) {
+                rankMap[rank] = users.sort(function(a,b) {
+                    return a.username.localeCompare(b.username);
+                });
+            });
+            $('#classement1').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th></thead><tbody id="classPhase1"></tbody></table>');
+            var i = 1;
+            $.each(rankMap, function (rank, users) {
+                $.each(users, function (r, user) {
+                    var rankClass = "";
+                    if (i === 1) {
+                        rankClass = "gold";
+                    } else if (i === 2) {
+                        rankClass = "silver";
+                    } else if (i === 3) {
+                        rankClass = "bronze";
+                    }
+                    i++;
+                    $('#classPhase1').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td></tr>');
+
+                });
+            });
+          }
+          $( "#accordion" ).accordion("option", "active",1);
+      });
+  }
+  catch (err) {
+    console.log("pas de fichier classement pour " + dDay);
+  }
 };
 
 function appendClassement(dDay) {

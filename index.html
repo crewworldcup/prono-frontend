@@ -9,6 +9,11 @@
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
     <script src="tools.js"></script>
+    <script>
+      $( function() {
+        $( "#accordion" ).accordion();
+      } );
+    </script>
     <link href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
@@ -54,16 +59,26 @@
     <style type="text/css">
     body { margin:0; }
     #titre { background: #337ab7; width:100%; text-align:center;}
+    #divContent {height:100% !important;}
+    #classement1 {height:100% !important;}
+
     </style>
 </head>
 <body>
   <div id="titre" height="100%"> <img src="copa.png" alt="Mundial"></div>
-  <div id="divContent">
-    <p></p>
-<ul class="nav nav-pills nav-stacked col-md-2" id="dateTab">
-</ul>
-<div class="tab-content col-md-10" id="dateCont">
-</div>
-</div>
+  <div id="accordion">
+    <h3>Poule</h3>
+    <div id="divContent">
+      <p></p>
+      <ul class="nav nav-pills nav-stacked col-md-2" id="dateTab">
+      </ul>
+      <div class="tab-content col-md-10" id="dateCont">
+      </div>
+    </div>
+    <h3>classement fin de phase 1</h3>
+    <div id="classement1">
+
+    </div>
+  </div>
 </body>
 </html>
