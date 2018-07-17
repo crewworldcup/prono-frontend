@@ -86,7 +86,8 @@ fetch('res.json')
         appendClassement8();
         appendClassement4();
         appendClassement2();
-
+        appendClassementPhase2();
+        appendClassementFinal();
 
 
     });
@@ -297,7 +298,7 @@ function appendClassement2() {
                     return a.username.localeCompare(b.username);
                 });
             });
-            $('#classement2').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th><th>Gain Pt</th><th>Gain Rg</th></thead><tbody id="classPhase2"></tbody></table>');
+            $('#classement2').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th><th>Gain Pt</th><th>Gain Rg</th></thead><tbody id="classDemi"></tbody></table>');
             var i = 1;
             $.each(rankMap, function (rank, users) {
                 $.each(users, function (r, user) {
@@ -310,12 +311,118 @@ function appendClassement2() {
                         rankClass = "bronze";
                     }
                     i++;
-                    $('#classPhase2').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td><td>' + user.evolPoint + '</td><td>' + user.evolRank + '</td></tr>');
+                    $('#classDemi').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td><td>' + user.evolPoint + '</td><td>' + user.evolRank + '</td></tr>');
 
                 });
             });
           }
-          $( "#accordion" ).accordion("option", "active",4);
+      });
+  }
+  catch (err) {
+    console.log("pas de fichier classement pour " + dDay);
+  }
+};
+
+function appendClassementPhase2() {
+  try {
+    fetch('phase2.json')
+    .then(function (response) {
+        if (response.status == 404) {
+            return "[]";
+        }
+        return response.json();
+
+    })
+    .then(function (classementJson) {
+        if (classementJson === "[]") {
+            $('#phase2').append('<p>Pas encore de classement</p>');
+        } else {
+            var rankMap = {};
+            $.each(classementJson, function (a, rank) {
+                if (rank.r in rankMap) {
+                    rankMap[rank.r].push(rank);
+                } else {
+                    rankMap[rank.r] = [rank];
+                }
+            });
+            rankMap = sortOnKeys(rankMap);
+            $.each(rankMap, function (rank, users) {
+                rankMap[rank] = users.sort(function(a,b) {
+                    return a.username.localeCompare(b.username);
+                });
+            });
+            $('#phase2').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th></thead><tbody id="classPhase2"></tbody></table>');
+            var i = 1;
+            $.each(rankMap, function (rank, users) {
+                $.each(users, function (r, user) {
+                    var rankClass = "";
+                    if (i === 1) {
+                        rankClass = "gold";
+                    } else if (i === 2) {
+                        rankClass = "silver";
+                    } else if (i === 3) {
+                        rankClass = "bronze";
+                    }
+                    i++;
+                    $('#classPhase2').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td></tr>');
+
+                });
+            });
+          }
+      });
+  }
+  catch (err) {
+    console.log("pas de fichier classement pour " + dDay);
+  }
+};
+
+function appendClassementFinal() {
+  try {
+    fetch('final.json')
+    .then(function (response) {
+        if (response.status == 404) {
+            return "[]";
+        }
+        return response.json();
+
+    })
+    .then(function (classementJson) {
+        if (classementJson === "[]") {
+            $('#finale').append('<p>Pas encore de classement</p>');
+        } else {
+            var rankMap = {};
+            $.each(classementJson, function (a, rank) {
+                if (rank.r in rankMap) {
+                    rankMap[rank.r].push(rank);
+                } else {
+                    rankMap[rank.r] = [rank];
+                }
+            });
+            rankMap = sortOnKeys(rankMap);
+            $.each(rankMap, function (rank, users) {
+                rankMap[rank] = users.sort(function(a,b) {
+                    return a.username.localeCompare(b.username);
+                });
+            });
+            $('#finale').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th>/thead><tbody id="classFin"></tbody></table>');
+            var i = 1;
+            $.each(rankMap, function (rank, users) {
+                $.each(users, function (r, user) {
+                    var rankClass = "";
+                    if (i === 1) {
+                        rankClass = "gold";
+                    } else if (i === 2) {
+                        rankClass = "silver";
+                    } else if (i === 3) {
+                        rankClass = "bronze";
+                    }
+                    i++;
+                    $('#classFin').append('<tr class="'+rankClass+'"><td>' + user.r + '</td><td>' + user.username + '</td><td>' + user.nbPoint + '</td></tr>');
+
+                });
+            });
+          }
+          $( "#accordion" ).accordion("option", "active",6);
       });
   }
   catch (err) {
