@@ -404,7 +404,7 @@ function appendClassementFinal() {
                     return a.username.localeCompare(b.username);
                 });
             });
-            $('#finale').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th>/thead><tbody id="classFin"></tbody></table>');
+            $('#finale').append('<table class="table" style="width:auto"><thead><tr><th>Classement</th><th>Joueur</th><th>Points</th></thead><tbody id="classFin"></tbody></table>');
             var i = 1;
             $.each(rankMap, function (rank, users) {
                 $.each(users, function (r, user) {
